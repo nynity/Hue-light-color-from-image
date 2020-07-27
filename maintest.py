@@ -2,6 +2,7 @@ from PIL import Image
 import random
 from phue import Bridge
 import time
+from multiprocessing import Process
 
 def imageRandomPixel(image):
     #import image and convert to RGB friendly true color image
@@ -45,22 +46,81 @@ b = Bridge('10.0.0.9')
 
 lights = b.get_light_objects()
 
+# brightness
+extralow = random.randint(10, 25)
+low = random.randint(50, 80)
+lowmed = random.randint(90, 125)
+med = random.randint(125,175)
+medhigh = random.randint(160,200)
+high = random.randint(190, 255)
 
-image = 'sunset2.jpg'
+# transition speed
+slow_tran = random.randint(300,600)
+med_tran = random.randint(100,300)
+fast_tran = random.randint(30,70)
+instant_tran = 50
+
+# sleep time
+sleep_long = random.randint(70, 100)
+sleep_med = random.randint(35, 60)
+sleep_short = random.randint(10, 25)
+sleep_instant = 30
 
 
-while True:
-    for light in lights:
-        extralow = random.randint(10, 25)
-        low = random.randint(50, 80)
-        lowmed = random.randint(90, 125)
-        med = random.randint(125,175)
-        medhigh = random.randint(160,200)
-        high = random.randint(190, 255)
 
-        # light.transitiontime = random.randint(30,70)
-        xy = imageRandomPixel(image)
-        light.brightness = medhigh
-        light.xy = xy 
-    # time.sleep(random.randint(10,30))
-    time.sleep(3)
+def light1():
+    while True:
+        b.set_light(1, 'on', True)
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        lights[0].transitiontime = random.randint(20,80)
+        lights[0].xy = xy
+        time.sleep((lights[0].transitiontime)/10 + random.randint(2, 7))
+
+def light2():
+    while True:
+        b.set_light(2, 'on', True)
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        lights[1].transitiontime = random.randint(20,80)
+        lights[1].xy = xy
+        time.sleep((lights[1].transitiontime)/10 + random.randint(2, 7))
+
+def light3():
+    while True:
+        b.set_light(3, 'on', True)
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        lights[2].transitiontime = random.randint(20,80)
+        lights[2].xy = xy
+        time.sleep((lights[2].transitiontime)/10 + random.randint(2, 7))
+
+def light4():
+    while True:
+        b.set_light(4, 'on', True)
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        lights[3].transitiontime = random.randint(20,80)
+        lights[3].xy = xy
+        time.sleep((lights[3].transitiontime)/10 + random.randint(2, 7))
+
+def lightflicker():
+    while True:
+        for light in lights:
+            light.brightness = random.randint(230,255)
+            # time.sleep(random.uniform(0,0.1))
+        time.sleep(random.uniform(0.2,0.7))
+
+
+if __name__ == '__main__':
+  p1 = Process(target=light1)
+  p1.start()
+  p2 = Process(target=light2)
+  p2.start()
+  p3 = Process(target=light3)
+  p3.start()
+  p4 = Process(target=light4)
+  p4.start()
+  p5 = Process(target=lightflicker)
+  p5.start()
+  p1.join()
+  p2.join()
+  p3.join()
+  p4.join()
+  p5.join()
