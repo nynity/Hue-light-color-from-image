@@ -68,59 +68,69 @@ sleep_instant = 30
 
 
 
-def light1():
+def light1(image, brightness):
     while True:
         b.set_light(1, 'on', True)
-        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/%s' %image)
         lights[0].transitiontime = random.randint(20,80)
+        lights[0].brightness = brightness
         lights[0].xy = xy
         time.sleep((lights[0].transitiontime)/10 + random.randint(2, 7))
 
-def light2():
+def light2(image, brightness):
     while True:
         b.set_light(2, 'on', True)
-        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/%s' %image)
         lights[1].transitiontime = random.randint(20,80)
+        lights[1].brightness = brightness
         lights[1].xy = xy
         time.sleep((lights[1].transitiontime)/10 + random.randint(2, 7))
 
-def light3():
+def light3(image, brightness):
     while True:
         b.set_light(3, 'on', True)
-        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/%s' %image)
         lights[2].transitiontime = random.randint(20,80)
+        lights[2].brightness = brightness
         lights[2].xy = xy
         time.sleep((lights[2].transitiontime)/10 + random.randint(2, 7))
 
-def light4():
+def light4(image, brightness):
     while True:
         b.set_light(4, 'on', True)
-        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/pastel2.jpg')
+        xy = imageRandomPixel('C:/Users/nickt/Documents/Python Scripts/Visual Studio Code/Phue/phue-master/Images/%s' %image)
         lights[3].transitiontime = random.randint(20,80)
+        lights[3].brightness = brightness
         lights[3].xy = xy
         time.sleep((lights[3].transitiontime)/10 + random.randint(2, 7))
 
 def lightflicker():
     while True:
         for light in lights:
-            light.brightness = random.randint(230,255)
+            light.brightness = random.randint(235,255)
             # time.sleep(random.uniform(0,0.1))
         time.sleep(random.uniform(0.2,0.7))
 
 
+userInputImage = 'carebear.jpg'
+userInputBrightness_low = 150
+userInputBrightness_high = 200
+
+
+
 if __name__ == '__main__':
-  p1 = Process(target=light1)
-  p1.start()
-  p2 = Process(target=light2)
-  p2.start()
-  p3 = Process(target=light3)
-  p3.start()
-  p4 = Process(target=light4)
-  p4.start()
-  p5 = Process(target=lightflicker)
-  p5.start()
-  p1.join()
-  p2.join()
-  p3.join()
-  p4.join()
-  p5.join()
+    p1 = Process(target=light1, args=(userInputImage, random.randint(userInputBrightness_low, userInputBrightness_high),))
+    p1.start()
+    p2 = Process(target=light2, args=(userInputImage, random.randint(userInputBrightness_low, userInputBrightness_high),))
+    p2.start()
+    p3 = Process(target=light3, args=(userInputImage, random.randint(userInputBrightness_low, userInputBrightness_high),))
+    p3.start()
+    p4 = Process(target=light4, args=(userInputImage, random.randint(userInputBrightness_low, userInputBrightness_high),))
+    p4.start()
+    # p5 = Process(target=lightflicker)
+    # p5.start()
+    p1.join()
+    p2.join()
+    p3.join()
+    p4.join()
+    # p5.join()
