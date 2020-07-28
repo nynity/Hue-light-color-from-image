@@ -46,28 +46,6 @@ b = Bridge('10.0.0.9')
 
 lights = b.get_light_objects()
 
-# brightness
-extralow = random.randint(10, 25)
-low = random.randint(50, 80)
-lowmed = random.randint(90, 125)
-med = random.randint(125,175)
-medhigh = random.randint(160,200)
-high = random.randint(190, 255)
-
-# transition speed
-slow_tran = random.randint(300,600)
-med_tran = random.randint(100,300)
-fast_tran = random.randint(30,70)
-instant_tran = 50
-
-# sleep time
-sleep_long = random.randint(70, 100)
-sleep_med = random.randint(35, 60)
-sleep_short = random.randint(10, 25)
-sleep_instant = 30
-
-
-
 def light1(image):
     while True:
         b.set_light(1, 'on', True)
@@ -111,18 +89,18 @@ def lightflicker():
             # time.sleep(random.uniform(0,0.1))
         time.sleep(random.uniform(0.2,0.7))
 
+
 #User Inputs Here
 userInputImage = 'water.jpg'
 
 userInputBrightness_low = 180
-userInputBrightness_high = 200
+userInputBrightness_high = 255
 
 userInputTranstion_low = 2
 userInputTranstion_high = 8
 
 userInputSleep_low = 2
 userInputSleep_high = 7
-
 
 
 if __name__ == '__main__':
